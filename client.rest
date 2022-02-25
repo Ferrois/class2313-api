@@ -1,0 +1,8 @@
+GET http://localhost:4000/total
+
+###
+
+POST http://localhost:4000/logs
+Content-Type: application/json
+
+{ "name" : "test" ,"amount" : "2"}
