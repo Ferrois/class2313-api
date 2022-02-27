@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 4000;
 var dbURI = process.env.MONGODB_URI;
 
 const LogsSchema = require("./models/Log.js");
-const { resourceLimits } = require("worker_threads");
+const PostSchema = require("./models/Post.js")
 
 app.use(
   cors({
@@ -69,6 +69,28 @@ app.get("/total", async (req, res) => {
 app.get("/logintokencode", (req,res) => {
     res.json('2313')
 })
+
+app.post("/posts", async (req,res)=>{
+  const post = new PostSchema({
+    name: req.body.name,
+    content: req.body.content,
+    time: Date.now(),
+  })
+  try {
+    const savedPost = await post.save();
+    console.log(`POST POST >> ${req.body.name} : $${req.body.content}`);
+    res.json(savedPost);
+  } catch (err) {
+    res.json({ message: err });
+  }
+})
+
+app.get("/posts", async (req,res)=>{
+  console.log("GET POSTS");
+  const posts = await PostSchema.find();
+  res.json(posts);
+})
+
 
 mongoose.connect(`${dbURI}`, () => console.log("connect to mongodb"));
 

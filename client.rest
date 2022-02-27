@@ -1,4 +1,4 @@
-GET http://localhost:4000/total
+GET https://furthermathgang-api.herokuapp.com/total
 
 ###
 
